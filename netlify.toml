@@ -1,0 +1,13 @@
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/assets/*.pdf"
+  [headers.values]
+    Content-Type = "application/pdf"
+    Content-Disposition = "inline; filename=\"Psicofagia - De Falco, Esposito.pdf\""
