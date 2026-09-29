@@ -1,13 +1,30 @@
 [build]
   publish = "."
 
+# CSS, JavaScript e ornamenti: il browser ricontrolla sempre se ci sono versioni nuove
 [[headers]]
-  for = "/assets/*"
+  for = "/assets/*.css"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
+[[headers]]
+  for = "/assets/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# PDF e immagini: possono restare in cache una settimana
 [[headers]]
   for = "/assets/*.pdf"
   [headers.values]
+    Cache-Control = "public, max-age=604800"
     Content-Type = "application/pdf"
-    Content-Disposition = "inline; filename=\"Psicofagia - De Falco, Esposito.pdf\""
+
+[[headers]]
+  for = "/articoli/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

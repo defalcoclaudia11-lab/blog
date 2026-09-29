@@ -142,6 +142,8 @@ Non si creano animazioni su misura per un singolo lavoro: ogni nuovo lavoro ered
 | `#monogramma` | piè di pagina, subito dopo «© 2026 Claudia De Falco» | `orn monogram` |
 | `#libro` (grande) | pagina 404 | `orn libro-404` |
 
+**Versione dei file**: CSS, script e ornamenti sono collegati con `?v=AAAAMMGG` (es. `style.css?v=20260929b`). **Ogni volta che modifichi `style.css`, `reveal.js` o `ornamenti.svg`, aggiorna il numero in tutte le pagine** (home, articoli, 404, modello), altrimenti chi ha già visitato il sito vede la versione vecchia.
+
 Regole: niente animazioni vistose, rimbalzi o loop continui; durata 0,6–1,6 s; tutto si disattiva con "riduci movimento". Un nuovo ornamento va aggiunto come `<symbol>` in `ornamenti.svg` (tratti con `pathLength="1"`, colore `currentColor`).
 
 ## 5. Procedure
