@@ -47,7 +47,7 @@ Articoli attuali: `seminario-debenedetti`, `manoscritti-dante-manus`, `psicofagi
 3. **Link relativi**: in home `articoli/...`, `assets/...`; dentro un articolo `img/...` per le sue immagini e `../../assets/...`, `../../` per il resto. Mai percorsi assoluti (`/assets`), tranne in `404.html`.
 4. **Non inventare contenuti a nome di Claudia**: niente citazioni, dati, voti, date, esperienze o bibliografia non presenti nei suoi materiali. Le bozze scritte da te vanno segnalate come bozze e approvate.
 5. **Coautori sempre citati** nella scheda in home e nell'articolo (es. *Psicofagia* con Rossella Esposito; il seminario con Antimo Amore, Giuseppe Monda e Guido Somma).
-6. **Privacy**: sul sito compare solo l'email `defalcoclaudia11@gmail.com`. Mai telefono, indirizzo, data di nascita.
+6. **Privacy**: sul sito compare solo l'email `defalcoclaudia11@gmail.com`. Mai telefono, indirizzo, data di nascita. **Non indicare la media dei voti** (va solo nel CV).
 7. **Copyright**: niente immagini prese dal web, niente foto di manoscritti o copertine di libri di altri editori. Per i lavori senza immagini proprie usa la **copertina tipografica** in CSS (vedi 4.4). La scheda Manus **non ha immagini** per scelta.
 8. **Niente tracciamento** (analytics, cookie, pixel, widget social) senza richiesta esplicita.
 9. **Non cancellare** articoli, PDF o immagini senza conferma esplicita.

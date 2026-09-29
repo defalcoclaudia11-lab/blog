@@ -184,9 +184,7 @@ a { color: inherit; }
 @media (max-width: 420px) {
   .nav a:nth-child(1) { display: none; }
 }
-@media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
-}
+
 
 /* Specificity fixes */
 .card .body .eyebrow { font-size: 12px; line-height: 1.4; color: var(--accent); }
@@ -291,3 +289,44 @@ a { color: inherit; }
 }
 .catalog-data.spaced { margin-top: 24px; padding-top: 20px; border-top: 1px dashed var(--rule); }
 .not-found { min-height: 70vh; align-content: center; }
+
+/* ------------------------------------------------------------------
+   Animazioni (solo CSS, leggere). Disattivate con "riduci movimento".
+   ------------------------------------------------------------------ */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes shimmer { from { background-position: 150% 0; } to { background-position: -50% 0; } }
+
+/* Apertura della home e della testata degli articoli, in sequenza */
+.hero > *, .intro > * { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+.hero > :nth-child(2), .intro > :nth-child(2) { animation-delay: .08s; }
+.hero > :nth-child(3), .intro > :nth-child(3) { animation-delay: .16s; }
+.intro > :nth-child(4) { animation-delay: .24s; }
+.intro > :nth-child(5) { animation-delay: .32s; }
+
+/* Linea sotto le voci del menu */
+.nav a { background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat; padding-bottom: 2px; transition: color .2s, background-size .3s ease; }
+.nav a:hover, .nav a[aria-current="page"] { background-size: 100% 1px; }
+
+/* Copertine: leggero sollevamento, riflesso dorato sull'iniziale */
+.type-cover { transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s; }
+.tc-initial {
+  background-image: linear-gradient(110deg, transparent 35%, rgba(255,240,200,.35) 50%, transparent 65%);
+  background-size: 250% 100%; background-position: 150% 0; background-color: #3B55A0;
+}
+.card:hover .tc-initial { animation: shimmer 1.1s ease; }
+.btn .arrow, .btn span[aria-hidden] { display: inline-block; transition: transform .25s; }
+.btn:hover span[aria-hidden] { transform: translate(2px, -1px); }
+
+/* Comparsa allo scorrimento (solo nei browser che la supportano) */
+@supports (animation-timeline: view()) {
+  .entry .card, .catalog-block, .prose > h2, .pages .band {
+    animation: rise linear both; animation-timeline: view(); animation-range: entry 0% cover 22%;
+  }
+  .entry-sep .line { transform-origin: left; animation: draw linear both; animation-timeline: view(); animation-range: entry 10% cover 30%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+.download + .download { margin-top: -48px; }
