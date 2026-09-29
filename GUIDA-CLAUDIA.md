@@ -9,7 +9,7 @@ Questa guida ti spiega come gestire il tuo sito in modo semplice, passo per pass
 Il tuo sito è composto da **file HTML e CSS** salvati in questa cartella (`blog/`).  
 Quando fai un **push su GitHub**, Netlify pubblica automaticamente le modifiche online.
 
-Il sito è visibile su: **[claudiadefalco.netlify.app](https://claudiadefalco.netlify.app)**
+Il sito è visibile su: **[cdf-blog.netlify.app](https://cdf-blog.netlify.app)**
 
 ---
 
@@ -19,8 +19,9 @@ Il sito è visibile su: **[claudiadefalco.netlify.app](https://claudiadefalco.ne
 blog/
 ├── index.html          ← La home page
 ├── assets/
-│   ├── style.css       ← Lo stile grafico
-│   └── img/            ← Immagini generali
+│   ├── style.css       ← Lo stile grafico (unico per tutto il sito)
+│   ├── favicon.svg
+│   └── *.pdf           ← I PDF scaricabili
 ├── articoli/
 │   ├── psicofagia/     ← Primo articolo
 │   │   ├── index.html

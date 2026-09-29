@@ -1,282 +1,159 @@
-# AGENTS.md — Istruzioni operative per agenti AI
+# AGENTS.md — Blog di Claudia De Falco
 
-## Identità del progetto
+Istruzioni per qualsiasi assistente AI che lavora su questo repository (Claude, Codex, Antigravity/Gemini, Copilot, Cursor…). **Leggile tutte prima di modificare qualcosa.** Se una regola qui è in conflitto con quello che vedi nei file, fidati dei file e segnala l'incoerenza a Claudia.
 
-Questo è il **sito personale / blog** di **Claudia De Falco**, studentessa e ricercatrice in Scienze della Comunicazione.  
-Il sito è un progetto editoriale che unisce **riflessione critica, cultura visiva e progettazione grafica**.
-
-- **Dominio**: [claudiadefalco.netlify.app](https://claudiadefalco.netlify.app)
-- **Hosting**: Netlify (deploy automatico da GitHub)
-- **Repository**: `github.com/defalcoclaudia11-lab/blog`
-- **Branch principale**: `main`
+- **Sito online**: https://cdf-blog.netlify.app
+- **Repository**: `github.com/defalcoclaudia11-lab/blog`, ramo `main`
+- **Hosting**: Netlify, pubblicazione automatica a ogni push su `main` (circa 1 minuto)
 
 ---
 
-## Stack tecnico
+## 1. Con chi stai lavorando
 
-| Componente     | Tecnologia        |
-|----------------|--------------------|
-| Struttura      | HTML5 semantico    |
-| Stile          | CSS puro (no framework) |
-| JavaScript     | Solo se strettamente necessario |
-| CMS            | Nessuno (statico)  |
-| Deploy         | Netlify via GitHub  |
-| Dominio        | `.netlify.app`     |
+- La proprietaria del sito è **Claudia De Falco**, laureanda magistrale in **Filologia Moderna** all'Università di Napoli Federico II (tesi in Storia della critica letteraria). **Non è una programmatrice.**
+- **Parla sempre in italiano**, con frasi semplici. Se nomini un termine tecnico (commit, push, deploy) spiegalo in una riga.
+- Prima di modifiche grandi (nuova sezione, colori, caratteri, struttura) descrivi in 2-3 righe cosa farai e **aspetta il suo ok**. Per correzioni piccole (un refuso, una frase) procedi.
+- Alla fine dille: cosa hai cambiato, come vederlo, se è già online.
+- Claudia ha l'ultima parola sui contenuti: tu proponi, lei decide.
 
-### Regole fondamentali
+## 2. Com'è fatto il sito
 
-- **Non usare mai framework CSS** (no Tailwind, no Bootstrap).
-- **Non usare JavaScript** a meno che non sia indispensabile per una funzionalità specifica.
-- **Non usare bundler, task runner o preprocessor** (no Webpack, no Sass, no PostCSS).
-- Il sito deve restare **statico, leggero e leggibile** anche senza JS.
-
----
-
-## Struttura del progetto
+Sito **statico**: solo HTML e CSS, nessun framework, nessun comando di build, nessun JavaScript. Ogni file è esattamente ciò che va online.
 
 ```
-blog/
-├── index.html                  ← Home page (lista articoli)
-├── 404.html                    ← Pagina errore personalizzata
-├── robots.txt
-├── netlify.toml
-├── README.md
-├── AGENTS.md                   ← (questo file)
-├── GUIDA-CLAUDIA.md            ← Guida semplificata per Claudia
-│
-├── assets/
-│   ├── style.css               ← Foglio di stile principale
-│   ├── favicon.svg
-│   └── img/                    ← Immagini condivise
-│       ├── hero-home.jpg
-│       └── ...
-│
+/
+├── index.html                      Home: presentazione, elenco lavori, chi sono, contatti
+├── 404.html                        Pagina "non trovata"
 ├── articoli/
-│   ├── psicofagia/
-│   │   ├── index.html
-│   │   └── img/
-│   │       ├── cover.jpg
-│   │       └── ...
-│   ├── prossimo-articolo/
-│   │   ├── index.html
-│   │   └── img/
-│   └── ...
-│
-└── _modelli/                   ← Template e snippet (non pubblicati)
-    ├── articolo-base.html
-    └── sezione-cta.html
+│   └── <slug>/
+│       ├── index.html              Un articolo = una cartella (URL: /articoli/<slug>/)
+│       └── img/                    Immagini di QUELL'articolo (copertina, pagine, slide)
+├── assets/
+│   ├── style.css                   UNICO foglio di stile di tutto il sito
+│   ├── favicon.svg
+│   └── <slug>.pdf                  PDF scaricabili (es. seminario-debenedetti.pdf)
+├── _modelli/articolo.html          Modello da copiare per ogni nuovo articolo (non indicizzato)
+├── GUIDA-CLAUDIA.md                Guida per Claudia
+├── CLAUDE.md, GEMINI.md            Rimandano a questo file
+└── netlify.toml                    Configurazione Netlify (non serve toccarla)
 ```
 
----
+Articoli attuali: `seminario-debenedetti`, `manoscritti-dante-manus`, `psicofagia`.
 
-## Sistema grafico e identità visiva
+## 3. Regole che non si violano mai
 
-### Palette colori (variabili CSS)
+1. **Niente framework, bundler o preprocessori** (React, Astro, Tailwind, Bootstrap, Sass, npm…) e niente JavaScript.
+2. **Un solo CSS**: `assets/style.css`. **Mai `style="..."` nell'HTML.** Un nuovo componente = nuove classi in `style.css`.
+3. **Link relativi**: in home `articoli/...`, `assets/...`; dentro un articolo `img/...` per le sue immagini e `../../assets/...`, `../../` per il resto. Mai percorsi assoluti (`/assets`), tranne in `404.html`.
+4. **Non inventare contenuti a nome di Claudia**: niente citazioni, dati, voti, date, esperienze o bibliografia non presenti nei suoi materiali. Le bozze scritte da te vanno segnalate come bozze e approvate.
+5. **Coautori sempre citati** nella scheda in home e nell'articolo (es. *Psicofagia* con Rossella Esposito; il seminario con Antimo Amore, Giuseppe Monda e Guido Somma).
+6. **Privacy**: sul sito compare solo l'email `defalcoclaudia11@gmail.com`. Mai telefono, indirizzo, data di nascita.
+7. **Copyright**: niente immagini prese dal web, niente foto di manoscritti o copertine di libri di altri editori. Per i lavori senza immagini proprie usa la **copertina tipografica** in CSS (vedi 4.4). La scheda Manus **non ha immagini** per scelta.
+8. **Niente tracciamento** (analytics, cookie, pixel, widget social) senza richiesta esplicita.
+9. **Non cancellare** articoli, PDF o immagini senza conferma esplicita.
 
-```css
-:root {
-  --color-bg:         #FDFDFC;
-  --color-text:       #1A1A1A;
-  --color-accent:     #C45A3C;
-  --color-accent-hover:#A3412B;
-  --color-muted:      #6B6B6B;
-  --color-border:     #E0DDD8;
-  --color-surface:    #F5F3EF;
-}
-```
+## 4. Sistema grafico (da rispettare)
 
-### Tipografia
+Stile **editoriale e minimale**, da rivista letteraria: molto spazio, una colonna di lettura, colori caldi, un solo accento rosso. Il design di riferimento è nel file Figma "Claudia De Falco – Blog".
 
-| Uso             | Font                        |
-|------------------|-----------------------------|
-| Titoli (`h1–h3`) | *Newsreader*, serif          |
-| Corpo testo      | *DM Sans*, sans-serif        |
-| Didascalie, note | *DM Sans* a dimensione ridotta |
+### 4.1 Colori (variabili in `:root` di `style.css`)
 
-Caricati da Google Fonts:
-```html
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400;6..72,700&display=swap" rel="stylesheet">
-```
+| Variabile   | Valore    | Uso |
+|-------------|-----------|-----|
+| `--bg`      | `#F6F2EA` | Sfondo "carta" |
+| `--surface` | `#FFFDF8` | Riquadri in rilievo |
+| `--band`    | `#EDE6DA` | Fascia dietro le immagini |
+| `--ink`     | `#1B1916` | Testo principale |
+| `--muted`   | `#6E665B` | Testo secondario, didascalie, meta |
+| `--rule`    | `#E2DACB` | Linee sottili |
+| `--accent`  | `#A8322A` | Rosso: etichette, link, pulsanti, numeri |
 
-### Principi di design
+Usa sempre le variabili. Niente gradienti, niente ombre pesanti, angoli al massimo 6px (pulsanti a pillola esclusi). Contrasto minimo 4.5:1.
 
-- **Stile editoriale**, ispirato a riviste culturali e portfolio di design.
-- **Uso dello spazio bianco** generoso (margini, padding larghi).
-- **Griglie semplici** (max 2-3 colonne), layout centrato con `max-width`.
-- **Immagini grandi**, usate come elementi narrativi, non decorativi.
-- **Micro-interazioni** solo con CSS (`:hover`, `transition`).
-- **Mobile first**: il sito deve essere perfettamente leggibile su smartphone.
+### 4.2 Caratteri
 
----
+- **Newsreader** (serif): titoli e testo di lettura (pesi 300, 400, 500, 600; corsivo per sottotitoli, citazioni e numeri di sezione).
+- **DM Sans**: solo elementi di servizio (menu, etichette maiuscole, date, didascalie, pulsanti, dati delle schede).
+- Nessun altro carattere. Il link Google Fonts è già in ogni pagina: copialo identico.
 
-## Come aggiungere un nuovo articolo
+### 4.3 Misure
 
-### 1. Creare la cartella
+`--wide: 880px` (header, home, fasce immagini) e `--col: 680px` (colonna di testo). Testo articolo 20px/1.7 (18px su mobile). Spazi tra sezioni 56–112px.
 
-```
-articoli/nome-articolo/
-├── index.html
-└── img/
-    ├── cover.jpg
-    └── ...
-```
+### 4.4 Componenti (classi CSS)
 
-### 2. Struttura HTML dell'articolo
+**Struttura**
+| Classe | Cosa è |
+|---|---|
+| `.wrap` / `.col` | Contenitore largo (880) / colonna di lettura (680) |
+| `.site-header`, `.brand`, `.nav` | Intestazione |
+| `.site-footer` | Piè di pagina |
+| `.section`, `.section-head` (+ `.strong`), `.count` | Sezione con titoletto e linea (`.strong` = linea scura) |
 
-Ogni articolo segue questo schema:
+**Home**
+| Classe | Cosa è |
+|---|---|
+| `.hero`, `.lead` | Apertura |
+| `.entries` > `.entry` | Elenco lavori, dal più recente |
+| `.entry-sep` (`.n`, `.line`, `.kind`) | **Separatore numerato** tra i lavori: «N. 01 ——— Tipo · data» |
+| `.card` (`.cover`, `.body`, `.meta`, `.more`) | Scheda del lavoro (titolo in `<h3>`) |
+| `.type-cover` + `.tc-bordeaux` / `.tc-notte` / `.tc-bosco` | **Copertina tipografica** senza immagini: `.tc-kicker`, `.tc-author`, `.tc-title`, `.tc-sub`, `.tc-initial` (grande iniziale) |
+| `.about`, `.about-text`, `.contact` | Chi sono e contatti |
 
-```html
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Titolo Articolo — Claudia De Falco</title>
-    <meta name="description" content="Breve descrizione dell'articolo per SEO.">
-    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400;6..72,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/style.css">
-</head>
-<body>
+**Articolo**
+| Classe | Cosa è |
+|---|---|
+| `.intro`, `.back`, `.standfirst`, `.byline`, `.who`, `.info` | Testata |
+| `.btn` | Pulsante rosso a pillola |
+| `.pages` > `.band` + `figcaption` | Fascia di 4 immagini verticali (pagine) |
+| `.band.wide` | Variante per immagini orizzontali (slide): 2 colonne, 1 su mobile |
+| `.prose` | Corpo: `p`, `h2` con `<span class="num">I.</span>`, `blockquote` + `cite`, `.keypoints` |
+| `.download` (`.t`, `.s`) | Box "Scarica il PDF" |
+| `.biblio` | Bibliografia |
+| `.toc` | Indice della pagina con link alle sezioni (usato nella scheda Manus) |
+| `.catalog-sheet` > `.catalog-block` | Scheda di catalogo: blocchi con `h2`, `h3.catalog-sub`, `.catalog-data` (+ `.spaced`), `.field-pair` (`.term`, `.value`), `.catalog-text`, `.catalog-quote` |
 
-    <nav class="site-nav">
-        <a href="/" class="nav-logo">Claudia De Falco</a>
-    </nav>
+Riusa questi componenti prima di crearne di nuovi.
 
-    <article class="article-page">
-        <header class="article-header">
-            <span class="article-category">Categoria</span>
-            <h1>Titolo dell'articolo</h1>
-            <p class="article-meta">
-                <time datetime="YYYY-MM-DD">GG mese AAAA</time> · X min di lettura
-            </p>
-        </header>
+## 5. Procedure
 
-        <figure class="article-cover">
-            <img src="img/cover.jpg" alt="Descrizione immagine" loading="lazy">
-            <figcaption>Eventuale didascalia</figcaption>
-        </figure>
+### A. Nuovo articolo
+1. Scegli uno **slug** minuscolo, senza accenti, con trattini (es. `calvino-lezioni-americane`).
+2. Copia `_modelli/articolo.html` in `articoli/<slug>/index.html` e **togli la riga `noindex`**.
+3. Compila tutti i segnaposto `{{...}}`; elimina i blocchi opzionali non usati. Minuti di lettura = parole ÷ 200.
+4. Immagini in `articoli/<slug>/img/`; PDF in `assets/<slug>.pdf`.
+5. In `index.html` copia un blocco `<article class="entry">` **in cima** a `.entries`, rinumera tutti i separatori (N. 01 = il più recente) e aggiorna il contatore («N lavori · anni»).
+6. Copertina: immagine di Claudia (`<img>` dentro `.cover`) oppure copertina tipografica con una variante di colore non ancora usata dal lavoro precedente.
+7. Controlla con la checklist (sezione 6).
 
-        <div class="article-body">
-            <!-- Contenuto dell'articolo -->
-            <p>...</p>
-            <h2>...</h2>
-            <blockquote>...</blockquote>
-        </div>
+**Struttura consigliata:** apertura (2 paragrafi), sezioni numerate `I.`, `II.`…, al massimo 2-3 citazioni brevi con autore e opera, chiusura, box PDF, bibliografia.
 
-        <footer class="article-footer">
-            <a href="/" class="back-link">← Torna alla home</a>
-        </footer>
-    </article>
+### B. Modificare un testo
+Cambia solo il testo richiesto. Mantieni virgolette «…», apostrofi tipografici (’) e trattini lunghi (–, —).
 
-    <footer class="site-footer">
-        <p>© 2025 Claudia De Falco</p>
-    </footer>
+### C. Immagini
+JPG, lato lungo max 1400px, possibilmente sotto 300 KB. Sempre `width`, `height`, `alt` descrittivo in italiano e `loading="lazy"` (tranne la prima immagine della pagina).
 
-</body>
-</html>
-```
+### D. PDF
+Tieni i PDF **sotto i 10 MB**: se una presentazione esportata da Canva è più pesante, comprimila prima di pubblicarla.
 
-### 3. Aggiungere la card in home page
+### E. Grafica
+Solo tramite variabili e classi di `style.css`. Descrivi prima l'effetto a Claudia (meglio con 2 alternative). Dopo il cambio controlla desktop e mobile (390px): nessuno scorrimento orizzontale.
 
-In `index.html`, nella sezione `.articles-grid`, aggiungere:
+### F. Pubblicare
+1. Checklist. 2. Commit con messaggio in italiano chiaro (es. `Nuovo articolo: Lezioni americane di Calvino`). 3. Push su `main`. 4. Comunica a Claudia l'indirizzo della pagina.
+Se non puoi fare il push, spiegale come caricare i file da GitHub (*Add file → Upload files*, trascinando le cartelle intere).
 
-```html
-<article class="article-card">
-    <a href="/articoli/nome-articolo/">
-        <img src="/articoli/nome-articolo/img/cover.jpg" alt="Descrizione" loading="lazy">
-        <div class="card-content">
-            <span class="card-category">Categoria</span>
-            <h2>Titolo dell'articolo</h2>
-            <p>Breve descrizione / sottotitolo dell'articolo.</p>
-            <span class="card-date">GG mese AAAA</span>
-        </div>
-    </a>
-</article>
-```
+## 6. Checklist prima di pubblicare
 
----
+- [ ] Tutti i link funzionano (immagini, PDF, ritorno alla home).
+- [ ] `<title>` e `<meta name="description">` (max 155 caratteri) unici; un solo `<h1>` per pagina.
+- [ ] Nessun `{{...}}` rimasto, nessun `style="..."`.
+- [ ] Coautori e fonti citati; solo l'email come dato personale.
+- [ ] Leggibile a 390px e su desktop.
+- [ ] Immagini con `alt`, `width`, `height`; PDF sotto i 10 MB.
+- [ ] Nuova scheda in cima alla home, separatori rinumerati, contatore aggiornato.
 
-## Convenzioni di scrittura
+## 7. Tono dei contenuti
 
-### Nome file e cartelle
-- Tutto **minuscolo**
-- Parole separate da **trattino** (`-`)
-- Niente spazi, accenti o caratteri speciali
-- Esempio: `articoli/cultura-visiva-oggi/`
-
-### Immagini
-- Formato preferito: **WebP** o **JPG**
-- Dimensione massima: **1200px** di larghezza
-- Compresse (usare strumenti come Squoosh)
-- Sempre con attributo `alt` descrittivo
-- Sempre con `loading="lazy"` (tranne hero/cover above-the-fold)
-
-### Testi
-- Tono: **riflessivo, colto ma accessibile**
-- Evitare linguaggio troppo accademico
-- Paragrafi brevi (3-4 righe max)
-- Uso di **sottotitoli** (`h2`, `h3`) per scandire la lettura
-
----
-
-## SEO e accessibilità
-
-### Ogni pagina deve avere:
-- `<title>` unico e descrittivo
-- `<meta name="description">` (max 155 caratteri)
-- Un solo `<h1>` per pagina
-- Attributi `alt` su tutte le immagini
-- HTML semantico (`<article>`, `<nav>`, `<header>`, `<footer>`, `<main>`, `<figure>`)
-- Link con testo significativo (no "clicca qui")
-
-### Struttura heading:
-```
-h1 → Titolo principale (uno solo)
-  h2 → Sezioni principali
-    h3 → Sotto-sezioni
-```
-
----
-
-## Deploy e workflow
-
-### Come pubblicare le modifiche:
-
-1. Modificare i file localmente
-2. Commit su Git:
-   ```bash
-   git add .
-   git commit -m "Descrizione breve della modifica"
-   git push origin main
-   ```
-3. Netlify rileva automaticamente il push e pubblica il sito aggiornato (1-2 minuti)
-
-### Netlify
-
-- Build command: nessuno (sito statico)
-- Publish directory: `/` (root)
-- Le configurazioni sono in `netlify.toml`
-
----
-
-## Cosa NON fare
-
-- ❌ Non aggiungere framework CSS o JS
-- ❌ Non modificare la struttura delle cartelle senza aggiornare i link
-- ❌ Non usare immagini senza `alt`
-- ❌ Non creare pagine senza `<title>` e `<meta description>`
-- ❌ Non committare file temporanei o di sistema (`.DS_Store`, `Thumbs.db`)
-- ❌ Non usare `style` inline — tutto va in `style.css`
-- ❌ Non usare `id` per lo stile — usare classi CSS
-- ❌ Non modificare il favicon senza approvazione
-
----
-
-## Note per l'agente
-
-- Prima di ogni modifica, **verifica** lo stato attuale del file che vuoi modificare.
-- Se devi creare un nuovo articolo, **chiedi** titolo, categoria, descrizione e immagini prima di procedere.
-- Mantieni **coerenza** con lo stile esistente (colori, font, spaziature).
-- Ogni modifica deve essere **testabile** aprendo il file HTML nel browser.
-- Se non sei sicuro di qualcosa, **chiedi** prima di procedere.
+Italiano curato ma accessibile, da lettrice che consiglia: frasi non troppo lunghe, termini tecnici spiegati la prima volta, citazioni sempre attribuite. Prima persona quando parla Claudia, prima persona plurale nei lavori di gruppo.

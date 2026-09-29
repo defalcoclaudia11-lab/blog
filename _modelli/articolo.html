@@ -1,0 +1,107 @@
+<!doctype html>
+<!--
+  MODELLO ARTICOLO — copialo in articoli/<slug>/index.html e sostituisci ogni {{...}}.
+  Le istruzioni complete sono in AGENTS.md, sezione 5.A.
+-->
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <!-- Rimuovi la riga seguente quando copi il modello in articoli/<slug>/ -->
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITOLO}} · Claudia De Falco</title>
+  <meta name="description" content="{{DESCRIZIONE — max 160 caratteri}}">
+  <meta name="author" content="Claudia De Falco">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{TITOLO}}">
+  <meta property="og:description" content="{{DESCRIZIONE BREVE}}">
+  <meta property="og:image" content="img/cover.jpg">
+  <meta name="theme-color" content="#F6F2EA">
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+  <header class="wrap site-header">
+    <a class="brand" href="../../">Claudia De Falco</a>
+    <nav class="nav" aria-label="Principale">
+      <a href="../../#scritti" aria-current="page">Scritti</a>
+      <a href="../../#chi-sono">Chi sono</a>
+      <a href="../../#contatti">Contatti</a>
+    </nav>
+  </header>
+
+  <main>
+    <article>
+      <header class="col intro">
+        <a class="back" href="../../#scritti">← Tutti gli scritti</a>
+        <p class="eyebrow">{{CATEGORIA · es. Saggio · Letteratura italiana}}</p>
+        <h1>{{TITOLO}}</h1>
+        <p class="standfirst">{{SOTTOTITOLO: una o due frasi che invogliano a leggere}}</p>
+        <div class="byline">
+          <div>
+            <div class="who">{{Claudia De Falco (+ eventuali coautori)}}</div>
+            <div class="info">{{Tipo di testo}} · {{N}} min di lettura</div>
+          </div>
+          <!-- OPZIONALE: pulsante PDF. Elimina se non c'è un PDF. -->
+          <a class="btn" href="../../assets/{{slug}}.pdf" download>Scarica il PDF <span aria-hidden="true">↓</span></a>
+        </div>
+      </header>
+
+      <!-- OPZIONALE: fascia con 1-4 immagini. Elimina tutto il <figure> se non serve. -->
+      <figure class="wrap pages">
+        <!-- Per immagini orizzontali (slide) usa <div class="band wide"> -->
+        <div class="band">
+          <a href="img/{{immagine-1}}.jpg" target="_blank" rel="noopener"><img src="img/{{immagine-1}}.jpg" width="{{L}}" height="{{A}}" alt="{{Descrizione immagine}}"></a>
+        </div>
+        <figcaption>{{Didascalia}}</figcaption>
+      </figure>
+
+      <div class="col prose">
+        <p>{{Apertura: di cosa parla il testo}}</p>
+        <p>{{Perché è interessante, per chi}}</p>
+
+        <h2><span class="num">I.</span> {{Titolo sezione}}</h2>
+        <p>{{Testo}}</p>
+
+        <!-- OPZIONALE: citazione breve, sempre con autore e opera -->
+        <blockquote>
+          <p>«{{Citazione}}»</p>
+          <cite>{{Autore}}, <i>{{Opera}}</i></cite>
+        </blockquote>
+
+        <!-- OPZIONALE: elenco di punti chiave -->
+        <ul class="keypoints">
+          <li>{{Punto chiave}}</li>
+        </ul>
+
+        <h2><span class="num">II.</span> {{Titolo sezione}}</h2>
+        <p>{{Testo}}</p>
+
+        <!-- OPZIONALE: box PDF -->
+        <div class="download">
+          <div>
+            <p class="t">{{Leggi il testo completo}}</p>
+            <p class="s">PDF · {{N}} pagine</p>
+          </div>
+          <a class="btn" href="../../assets/{{slug}}.pdf" target="_blank" rel="noopener">Apri il PDF <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <section class="biblio" aria-labelledby="biblio-title">
+          <h2 class="label" id="biblio-title">Bibliografia essenziale</h2>
+          <ul>
+            <li>{{Cognome, N.}}, <i>{{Titolo}}</i>, {{Città}}, {{Editore}}, {{Anno}}.</li>
+          </ul>
+        </section>
+      </div>
+    </article>
+  </main>
+
+  <footer class="wrap site-footer">
+    <span>© 2026 Claudia De Falco</span>
+    <a href="mailto:defalcoclaudia11@gmail.com">defalcoclaudia11@gmail.com</a>
+  </footer>
+</body>
+</html>
