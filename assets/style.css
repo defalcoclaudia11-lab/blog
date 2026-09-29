@@ -293,16 +293,17 @@ a { color: inherit; }
 /* ------------------------------------------------------------------
    Animazioni (solo CSS, leggere). Disattivate con "riduci movimento".
    ------------------------------------------------------------------ */
-@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
 @keyframes draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes shimmer { from { background-position: 150% 0; } to { background-position: -50% 0; } }
 
 /* Apertura della home e della testata degli articoli, in sequenza */
-.hero > *, .intro > * { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
-.hero > :nth-child(2), .intro > :nth-child(2) { animation-delay: .08s; }
-.hero > :nth-child(3), .intro > :nth-child(3) { animation-delay: .16s; }
-.intro > :nth-child(4) { animation-delay: .24s; }
-.intro > :nth-child(5) { animation-delay: .32s; }
+.hero > *, .intro > * { animation: rise 1s cubic-bezier(.2,.7,.2,1) both; }
+.hero > :nth-child(2), .intro > :nth-child(2) { animation-delay: .12s; }
+.hero > :nth-child(3), .intro > :nth-child(3) { animation-delay: .24s; }
+.intro > :nth-child(4) { animation-delay: .36s; }
+.intro > :nth-child(5) { animation-delay: .48s; }
+.site-header { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
 
 /* Linea sotto le voci del menu */
 .nav a { background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat; padding-bottom: 2px; transition: color .2s, background-size .3s ease; }
@@ -318,12 +319,119 @@ a { color: inherit; }
 .btn .arrow, .btn span[aria-hidden] { display: inline-block; transition: transform .25s; }
 .btn:hover span[aria-hidden] { transform: translate(2px, -1px); }
 
-/* Comparsa allo scorrimento (solo nei browser che la supportano) */
-@supports (animation-timeline: view()) {
-  .entry .card, .catalog-block, .prose > h2, .pages .band {
-    animation: rise linear both; animation-timeline: view(); animation-range: entry 0% cover 22%;
-  }
-  .entry-sep .line { transform-origin: left; animation: draw linear both; animation-timeline: view(); animation-range: entry 10% cover 30%; }
+/* Comparsa allo scorrimento: classi aggiunte da assets/reveal.js (tutti i browser) */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+/* Nei lavori della home: la linea del separatore si disegna e la copertina "si posa" */
+.entry.reveal .entry-sep .line { transform: scaleX(0); transform-origin: left; transition: transform 1.2s .25s cubic-bezier(.2,.7,.2,1); }
+.entry.reveal.is-in .entry-sep .line { transform: scaleX(1); }
+.entry.reveal .cover { transform: translateY(18px) rotate(-2deg); transition: transform 1.1s .15s cubic-bezier(.2,.7,.2,1), box-shadow .4s; }
+.entry.reveal.is-in .cover { transform: none; }
+.entry.reveal.is-in .card:hover .cover { transform: translateY(-4px) rotate(-.6deg); }
+.entry.reveal .body > * { opacity: 0; transform: translateY(10px); transition: opacity .7s, transform .7s cubic-bezier(.2,.7,.2,1); }
+.entry.reveal.is-in .body > * { opacity: 1; transform: none; }
+.entry.reveal.is-in .body > :nth-child(2) { transition-delay: .1s; }
+.entry.reveal.is-in .body > :nth-child(3) { transition-delay: .18s; }
+.entry.reveal.is-in .body > :nth-child(4) { transition-delay: .26s; }
+.entry.reveal.is-in .body > :nth-child(5) { transition-delay: .34s; }
+
+/* Titolo della home: sottolineatura rossa che si disegna all'apertura */
+.hero h1::after {
+  content: ""; display: block; width: 72px; height: 2px; margin-top: 26px; background: var(--accent);
+  transform-origin: left; animation: draw 1s .5s cubic-bezier(.2,.7,.2,1) both;
+}
+
+/* ==================================================================
+   LIBRERIA ANIMAZIONI (moduli riutilizzabili per ogni nuovo lavoro)
+   1. Comparsa allo scorrimento .... automatica, oppure attributo data-reveal
+   2. Cornice che si disegna ....... automatica su ogni .type-cover
+   3. Luce su carta ................ automatica su ogni .cover (immagine o tipografica)
+   4. Ornamenti SVG ................ <svg class="orn"><use href=".../ornamenti.svg#rombo"/></svg>
+                                      oppure #filetto (dentro <div class="finis">)
+   ================================================================== */
+
+/* 2. Cornice delle copertine tipografiche: si disegna dall'angolo in alto a sinistra */
+@keyframes frame-in { from { clip-path: inset(0 100% 100% 0); } to { clip-path: inset(0 0 0 0); } }
+.type-cover::before { animation: frame-in 1.4s .2s cubic-bezier(.6,0,.2,1) both; }
+.entry.reveal .type-cover::before { animation: none; clip-path: inset(0 100% 100% 0); transition: clip-path 1.4s .35s cubic-bezier(.6,0,.2,1); }
+.entry.reveal.is-in .type-cover::before { clip-path: inset(0 0 0 0); }
+
+/* 3. Luce su carta: grana leggera + riflesso che passa (al passaggio del mouse e alla comparsa) */
+.cover { position: relative; isolation: isolate; }
+.cover::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  background:
+    linear-gradient(115deg, transparent 38%, rgba(255,248,230,.38) 50%, transparent 62%) no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 260% 100%, 160px 160px;
+  background-position: 160% 0, 0 0;
+  mix-blend-mode: soft-light; opacity: .75;
+}
+@keyframes sheen { from { background-position: 160% 0, 0 0; } to { background-position: -60% 0, 0 0; } }
+.card:hover .cover::after { animation: sheen 1.3s cubic-bezier(.4,0,.2,1); }
+.entry.reveal.is-in .cover::after { animation: sheen 1.6s .6s cubic-bezier(.4,0,.2,1) both; }
+.entry.reveal.is-in .card:hover .cover::after { animation: sheen 1.3s cubic-bezier(.4,0,.2,1); }
+
+/* 4. Ornamenti SVG che si disegnano */
+.orn { width: 40px; height: 16px; flex: none; color: var(--accent); fill: none; stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.orn, .finis svg { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.reveal .orn, .finis.reveal svg { stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s .4s ease; }
+.reveal.is-in .orn, .finis.reveal.is-in svg { stroke-dashoffset: 0; }
+.entry-sep .orn { margin-right: 4px; }
+.finis { display: flex; justify-content: center; color: var(--accent); margin: 8px 0 48px; }
+.finis svg { width: 200px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.2; stroke-linecap: round; overflow: visible; }
+
+
+/* 4b. Ornamenti: icone per tipo di lavoro, segnalibro, documento, monogramma, 404 */
+.orn-tipo { width: 30px; height: 22px; stroke-width: 1.4; }
+@keyframes stroke-in { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes ribbon { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.intro { position: relative; }
+.intro > .segnalibro {
+  position: absolute; top: 0; right: 0; width: 22px; height: 66px; stroke-width: 1.2;
+  transform-origin: top; animation: ribbon 1.1s .6s cubic-bezier(.2,.7,.2,1) both;
+}
+
+.download > div:first-child { flex: 1 1 320px; min-width: 0; display: grid; grid-template-columns: auto 1fr; column-gap: 18px; align-items: center; }
+.download > div:first-child > .doc-icon { grid-row: span 2; }
+.download .doc-icon { width: 26px; height: 32px; stroke-width: 1.3; transition: transform .35s cubic-bezier(.2,.7,.2,1); }
+.download:hover .doc-icon { transform: translateY(-3px) rotate(-5deg); }
+.download.reveal .doc-icon { stroke-dashoffset: 1; transition: stroke-dashoffset 1.4s .3s ease, transform .35s; }
+.download.reveal.is-in .doc-icon { stroke-dashoffset: 0; }
+
+.site-footer { align-items: center; }
+.site-footer .monogram { width: 40px; height: 40px; stroke-width: 1.1; color: var(--muted); }
+.site-footer.reveal .monogram { stroke-dashoffset: 1; transition: stroke-dashoffset 2s .2s ease; }
+.site-footer.reveal.is-in .monogram { stroke-dashoffset: 0; }
+
+.libro-404 { width: 96px; height: 72px; stroke-width: 1; margin-bottom: 8px; animation: stroke-in 2.2s .2s ease both; }
+
+/* 5. Caporali «» a margine delle citazioni (automatici su ogni blockquote degli articoli) */
+.prose blockquote { position: relative; }
+.prose blockquote::before {
+  content: ""; position: absolute; left: -48px; top: 12px; width: 26px; height: 22px; background: var(--accent); opacity: .85;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 22' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 3 L3 11 L11 19 M23 3 L15 11 L23 19'/%3E%3C/svg%3E") no-repeat center / contain;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 22' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 3 L3 11 L11 19 M23 3 L15 11 L23 19'/%3E%3C/svg%3E") no-repeat center / contain;
+  transition: transform .9s .3s cubic-bezier(.2,.7,.2,1), opacity .9s .3s;
+}
+.prose blockquote.reveal::before { transform: translateX(-10px); opacity: 0; }
+.prose blockquote.reveal.is-in::before { transform: none; opacity: .85; }
+
+/* 6. Elenchi puntati con mini-losanga (automatici su .keypoints) */
+.keypoints li::before {
+  content: ""; top: .62em; width: 10px; height: 10px; background: var(--accent);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 .8 L9.2 5 L5 9.2 L.8 5 Z' fill='none' stroke='black' stroke-width='1.3'/%3E%3C/svg%3E") no-repeat center / contain;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M5 .8 L9.2 5 L5 9.2 L.8 5 Z' fill='none' stroke='black' stroke-width='1.3'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+@media (max-width: 760px) {
+  .prose blockquote::before { display: none; }
+  .intro > .segnalibro { width: 16px; height: 48px; top: -8px; }
+  .site-footer .monogram { order: -1; flex-basis: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

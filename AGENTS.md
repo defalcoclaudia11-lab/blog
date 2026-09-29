@@ -42,7 +42,7 @@ Articoli attuali: `seminario-debenedetti`, `manoscritti-dante-manus`, `psicofagi
 
 ## 3. Regole che non si violano mai
 
-1. **Niente framework, bundler o preprocessori** (React, Astro, Tailwind, Bootstrap, Sass, npm…) e niente JavaScript.
+1. **Niente framework, bundler o preprocessori** (React, Astro, Tailwind, Bootstrap, Sass, npm…). L'unico JavaScript ammesso è `assets/reveal.js` (comparsa allo scorrimento), incluso in ogni pagina con `<script src="…/assets/reveal.js" defer></script>`: non aggiungerne altri.
 2. **Un solo CSS**: `assets/style.css`. **Mai `style="..."` nell'HTML.** Un nuovo componente = nuove classi in `style.css`.
 3. **Link relativi**: in home `articoli/...`, `assets/...`; dentro un articolo `img/...` per le sue immagini e `../../assets/...`, `../../` per il resto. Mai percorsi assoluti (`/assets`), tranne in `404.html`.
 4. **Non inventare contenuti a nome di Claudia**: niente citazioni, dati, voti, date, esperienze o bibliografia non presenti nei suoi materiali. Le bozze scritte da te vanno segnalate come bozze e approvate.
@@ -111,9 +111,38 @@ Usa sempre le variabili. Niente gradienti, niente ombre pesanti, angoli al massi
 | `.download` (`.t`, `.s`) | Box "Scarica il PDF" |
 | `.biblio` | Bibliografia |
 | `.toc` | Indice della pagina con link alle sezioni (usato nella scheda Manus) |
+| `.reveal` / `.is-in` | Stati dell'animazione allo scorrimento, aggiunti da `reveal.js` (non scriverli a mano) |
 | `.catalog-sheet` > `.catalog-block` | Scheda di catalogo: blocchi con `h2`, `h3.catalog-sub`, `.catalog-data` (+ `.spaced`), `.field-pair` (`.term`, `.value`), `.catalog-text`, `.catalog-quote` |
 
 Riusa questi componenti prima di crearne di nuovi.
+
+### 4.5 Libreria animazioni (moduli riutilizzabili)
+
+Non si creano animazioni su misura per un singolo lavoro: ogni nuovo lavoro eredita questi moduli da solo.
+
+| Modulo | Come si attiva | Dove sta |
+|---|---|---|
+| Comparsa allo scorrimento | automatica su `.entry`, `.catalog-block`, `.prose > h2`, `.download`, `.biblio`, `.finis`…; per altri elementi aggiungi l'attributo `data-reveal` | `assets/reveal.js` + classi `.reveal` / `.is-in` |
+| Apertura pagina | automatica su `.hero` e `.intro` (compaiono in sequenza) | `style.css` |
+| Cornice che si disegna | automatica su ogni `.type-cover` | `style.css` |
+| Luce su carta (grana + riflesso) | automatica su ogni `.cover`, immagine o tipografica | `style.css` (texture SVG inline) |
+| Ornamenti SVG che si disegnano | vedi tabella sotto | `assets/ornamenti.svg` |
+| Caporali «» a margine | automatici su ogni `blockquote` negli articoli | `style.css` |
+| Mini-losanga negli elenchi | automatica su `.keypoints` | `style.css` |
+
+**Simboli di `assets/ornamenti.svg`** (uso: `<svg class="orn …" aria-hidden="true"><use href="…/assets/ornamenti.svg#NOME"/></svg>`)
+
+| Simbolo | Dove | Classe |
+|---|---|---|
+| `#presentazione`, `#codice`, `#libro` | separatore di ogni lavoro in home, scelto in base al **tipo**: seminario/slide → `presentazione`; manoscritto/scheda → `codice`; saggio/rivista/articolo → `libro` | `orn orn-tipo` |
+| `#rombo` | separatore generico, se nessun tipo è adatto | `orn` |
+| `#segnalibro` | primo elemento di `<header class="col intro">` in ogni articolo | `orn segnalibro` |
+| `#documento` | primo elemento del `<div>` di testo in ogni `.download` | `orn doc-icon` |
+| `#filetto` | chiusura dell'articolo, dentro `<div class="finis" aria-hidden="true">` | — |
+| `#monogramma` | piè di pagina, subito dopo «© 2026 Claudia De Falco» | `orn monogram` |
+| `#libro` (grande) | pagina 404 | `orn libro-404` |
+
+Regole: niente animazioni vistose, rimbalzi o loop continui; durata 0,6–1,6 s; tutto si disattiva con "riduci movimento". Un nuovo ornamento va aggiunto come `<symbol>` in `ornamenti.svg` (tratti con `pathLength="1"`, colore `currentColor`).
 
 ## 5. Procedure
 
