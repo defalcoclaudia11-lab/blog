@@ -80,6 +80,8 @@ a { color: inherit; }
 .more .arrow { display: inline-block; transition: transform .25s; }
 .card:hover .more .arrow { transform: translateX(4px); }
 .card + .card { margin-top: 64px; padding-top: 64px; border-top: 1px solid var(--rule); }
+.card.no-cover { display: block; }
+.card.no-cover .body { max-width: 720px; }
 
 /* Codicological and metadata sheet */
 .spec-box {
@@ -256,3 +258,35 @@ a { color: inherit; }
 .about .contact .label { font-size: 12px; line-height: 1.4; color: var(--muted); }
 .pages .band img { height: auto; }
 .prose .biblio h2 { font-family: var(--sans); font-weight: 600; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; margin: 0; display: block; }
+
+/* Catalog sheet specific styles */
+.catalog-sheet { display: grid; gap: 32px; padding-bottom: 80px; }
+.catalog-block {
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 4px;
+  padding: 28px 32px;
+}
+.catalog-block h2 {
+  font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--accent); margin: 0 0 18px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--rule);
+}
+.catalog-block h3 {
+  font-family: var(--serif); font-size: 22px; font-weight: 400; margin: 24px 0 12px; color: var(--ink);
+}
+.catalog-block h4 {
+  font-family: var(--sans); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em;
+  margin: 18px 0 8px; color: var(--muted);
+}
+.catalog-data {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px 24px;
+  font-family: var(--sans); font-size: 15px; line-height: 1.5;
+}
+.field-pair { display: flex; flex-direction: column; gap: 2px; }
+.field-pair .term { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; }
+.field-pair .value { color: var(--ink); }
+.catalog-text { font-family: var(--serif); font-size: 18px; line-height: 1.65; color: var(--ink); margin: 10px 0 0; }
+.catalog-quote {
+  font-style: italic; padding: 8px 0 8px 18px; border-left: 2px solid var(--accent);
+  margin: 12px 0; color: var(--ink); font-size: 17px;
+}
+
